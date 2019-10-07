@@ -33,8 +33,6 @@ export default new vuex.Store({
                     })
                     state.diaries = diaries
                })
-
-               
           },
           addDiary: (state, payload) => {
                db.ref('diary').push(payload)
@@ -42,6 +40,10 @@ export default new vuex.Store({
                database.collection('diary').add(payload )
                        .then(res => console.log(res))
                        .catch(err => console.log(err))
+               state.form = {
+                    date: '',
+                    log: []
+               }
           },
           setLog: (state, payload) => state.form.log.push(payload),
           addForm: (state, payload)  => state.form.date = payload

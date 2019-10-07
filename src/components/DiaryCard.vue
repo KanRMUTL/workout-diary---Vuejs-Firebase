@@ -5,7 +5,6 @@
                <div class="md-title">{{ diary.date }}</div>
           </md-card-header>
           <md-card-content>
-               <md-subheader>Workout Log</md-subheader>
                <md-list>
                     <md-list-item v-for="(log, key) in diary.log" :key="`log${key}`" to="#" exact>
                          {{ log.name }}
@@ -28,5 +27,7 @@ export default {
 </script>
 
 <style>
-
+.md-card {
+     margin: 2%;
+}
 </style>
