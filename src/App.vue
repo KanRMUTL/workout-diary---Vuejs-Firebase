@@ -1,18 +1,23 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <DiaryForm />
+    <DiaryCard/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import DiaryCard from './components/DiaryCard'
+import DiaryForm from './components/DiaryForm'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
-  }
+    DiaryCard,
+    DiaryForm
+  },
+  mounted () {
+    this.$store.dispatch('callDiary');
+  },
 }
 </script>
 
