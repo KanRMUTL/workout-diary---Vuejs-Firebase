@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import vuex from 'vuex'
-import { db, database } from '@/main'
+import { database } from '@/main'
 Vue.use(vuex)
 
 export default new vuex.Store({
@@ -36,8 +36,6 @@ export default new vuex.Store({
           },
           addDiary: (state, payload) => {   
                database.collection('diary').add(payload )
-                       .then(res => console.log(res))
-                       .catch(err => console.log(err))
                state.form = {
                     date: '',
                     log: []
