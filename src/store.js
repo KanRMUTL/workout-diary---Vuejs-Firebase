@@ -34,9 +34,7 @@ export default new vuex.Store({
                     state.diaries = diaries
                })
           },
-          addDiary: (state, payload) => {
-               db.ref('diary').push(payload)
-               
+          addDiary: (state, payload) => {   
                database.collection('diary').add(payload )
                        .then(res => console.log(res))
                        .catch(err => console.log(err))

@@ -5,6 +5,10 @@ import DiaryCard from './components/DiaryCard'
 
 const routes = [
       {
+          path: '/',
+          component: DiaryCard,
+     },
+     {
           path: '/diaries',
           component: DiaryCard,
      },

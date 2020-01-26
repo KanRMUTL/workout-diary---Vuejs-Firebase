@@ -2,17 +2,12 @@
   <div class="md-layout">
     <md-card class="md-layout-item md-small-size-100">
           <md-card-header>
-               <div class="md-title">Add Activity</div>
+               <div class="md-title">New Workout</div>
           </md-card-header>
           <md-card-content>
                <div class="layout-gutter md-layout">
 
                     <div class="md-layout-item ">
-                         <md-field>
-                              <label for="new-diary">new workout</label>
-                              <md-input name="new-diary" v-model="date"/>
-                         </md-field>
-                         Log
                          <md-field>
                               <label for="log-name">Workout name</label>
                               <md-input name="log-name" v-model="log.name"/>
@@ -28,6 +23,7 @@
                               <md-icon class="fa fa-stop"></md-icon>
                          </md-button>
                          <br>
+                         <input type="file" @change="uploadFile()" id="files" name="files[]" multiple />
                          <md-button class="md-raised" @click="submitLog">Add New Log</md-button>
                          <md-button class="md-raised md-primary" @click="submitForm">Save Diary</md-button>
                     </div>
@@ -41,7 +37,9 @@
 
 <script>
 import {mapActions, mapGetters} from 'vuex'
+import firebase from 'firebase'
 import WorkoutLog from './WorkoutLog'
+import moment from 'moment'
 
 export default {
      name: 'DiaryForm',
@@ -50,7 +48,7 @@ export default {
      },
      data() {
           return {
-               date: '',
+               date: moment().format("DD/MM/YYYY"),
                watching: false,
                log: {
                     name: '',
@@ -61,6 +59,23 @@ export default {
      },
      methods: {
           ...mapActions(['setLog', 'addForm','addDiary']),
+          uploadFile () {
+      
+               // Created a Storage Reference with root dir
+               var storageRef = firebase.storage().ref();
+               // Get the file from DOM
+               var file = document.getElementById("files").files[0];
+               console.log(file);
+               
+               //dynamically set reference to the file name
+               var thisRef = storageRef.child(file.name);
+
+               //put request upload file to firebase storage
+               thisRef.put(file).then(function(snapshot) {
+               alert("File Uploaded")
+               console.log('Uploaded a blob or file!');
+               });
+          },
           stopWatch(){
                this.watching = true;
                var watch = setInterval(() => {
@@ -76,7 +91,6 @@ export default {
                }, 1000)
           },
           submitLog() {
-               this.watching = false
                this.setLog(this.log)
                this.clearLog()
           },
@@ -84,7 +98,6 @@ export default {
                this.watching = false
                this.addForm(this.date)
                this.addDiary(this.getForm)
-               this.date = '',
                this.clearLog()
           },
           clearLog(){

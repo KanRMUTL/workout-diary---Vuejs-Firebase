@@ -17,7 +17,6 @@ import './vuematerial'
   };
 
   firebase.initializeApp(firebaseConfig);
-  export const db = firebase.database()
   export const database = firebase.firestore()
 
 Vue.config.productionTip = false
